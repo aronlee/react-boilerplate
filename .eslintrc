@@ -1,0 +1,27 @@
+{
+  "env": {
+      "browser": true,
+      "es6": true
+  },
+  "extends": "vue",
+  "plugins": ["vue"],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "linebreak-style": 0,
+    "space-before-function-paren": 0
+  }
+}

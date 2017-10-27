@@ -3,13 +3,14 @@
       // https://github.com/babel/babel-preset-env
       // https://segmentfault.com/a/1190000005112677
       // http://www.2ality.com/2015/12/babel6-loose-mode.html
-      ["env", {
+      [
+        "env",
+        {
           "targets": {
-              "browsers": ["> 5%", "last 2 versions", "IE >= 8"]
-          },
-          // "modules": "commonjs", // by default
-          "loose": true
-      }],
+              "browsers": [">1%", "last 4 versions", "Firefox ESR", "not ie < 9"]
+          }
+        }
+      ],
       "react",
       "stage-0"
   ],
@@ -19,7 +20,8 @@
           "polyfill": true,
           "regenerator": true
       }],
-      "add-module-exports"
+      "add-module-exports",
+      "transform-decorators-legacy"
   ],
   // Output comments in generated output.
   "comments": false

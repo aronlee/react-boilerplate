@@ -2,6 +2,7 @@ import webpack from 'webpack'
 import path from 'path'
 
 import { alias, entries, provides } from "../files-config"
+import { mergeModleToEntry } from './util'
 
 const NodeEnv = process.env.NODE_ENV
 
@@ -14,11 +15,11 @@ const reImage = /\.(bmp|gif|jpg|jpeg|png|svg)$/;
 // const reFile = /\.(png|jpg|gif|woff|woff2|ttf|eot|svg|swf)$/;
 const staticAssetName = '[name]_[sha512:hash:base64:7].[ext]'; // 打包后的静态文件名
 
-
 export default ({ isDebug, performance, plugins, entry = [] }) => {
+
   return ({
     context: `${process.cwd()}/src`,
-    entry: entry.concat(entries),
+    entry: mergeModleToEntry(entries, entry),
     // Don't attempt to continue if there are any errors.
     // 一旦发生错误，立即终止
     bail: !isDebug,
@@ -50,7 +51,7 @@ export default ({ isDebug, performance, plugins, entry = [] }) => {
             },
           },
         },
-
+  
         // style
         {
           test: /\.(css|less|scss|sass)$/,
@@ -92,19 +93,19 @@ export default ({ isDebug, performance, plugins, entry = [] }) => {
             },
           ],
         },
-
-        // html
+  
+        // // html
         {
           test: /\.html/,
           loader: "html-loader",
         },
-
+  
         // json
         {
           test: /\.json$/,
           use: 'json-loader',
         },
-
+  
         // images
         {
           test: reImage,
@@ -122,7 +123,7 @@ export default ({ isDebug, performance, plugins, entry = [] }) => {
                     limit: 4096, // 4kb
                   },
                 },
-
+  
                 // Inline lightweight images as Base64 encoded DataUrl string
                 {
                   loader: 'url-loader',
@@ -142,16 +143,16 @@ export default ({ isDebug, performance, plugins, entry = [] }) => {
             },
           ],
         },
-
+  
         // files
         {
-          exclude: [reScript, reStyle, reImage, /\.json$/, /\.txt$/, /\.md$/],
+          exclude: [reScript, reStyle, reImage, /\.json$/, /\.txt$/, /\.md$/, /\.html$/],
           loader: 'file-loader',
           options: {
             name: staticAssetName,
           },
         },
-
+  
         // video
         {
           test: /\.(mp4|webm)$/,
@@ -169,21 +170,24 @@ export default ({ isDebug, performance, plugins, entry = [] }) => {
       new webpack.ProvidePlugin(Object.assign({
         // make fetch available
         fetch: 'exports-loader?self.fetch!whatwg-fetch',
+        React: 'react',
+        ReactDOM: 'react-dom',
       }, provides)),
-
+  
       // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
       // inside your code for any environment checks; UglifyJS will automatically
       // drop any unreachable code.
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': isDebug ? '"development"' : '"production"',
       }),
-
+  
       new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
+        name: ['vendor', 'common'],
         children: true,
         minChunks: 2,
         async: true,
       }),
+      
       new webpack.NamedModulesPlugin(),
     ])
   })

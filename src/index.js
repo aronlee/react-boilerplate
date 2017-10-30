@@ -1,9 +1,15 @@
-/** @jsx RootRouter */
+export default class MainPage extends React.Component {
 
-import {render} from 'react-dom';
-import './index.scss';
+  constructor(props) {
+    super(props)
+  }
 
-// router
-import RootRouter from './router';
+  render() {
+    return <div>111111</div>
+  }
+  
+}
 
-render(<RootRouter />, document.getElementById('root-router'));
+const container = document.getElementById('app')
+
+ReactDOM.render(<MainPage />, container)

@@ -46,24 +46,44 @@ const HOST = process.env.HOST || '0.0.0.0'
 
 function createCompiler(compiler) {
   return new Promise((resolve, reject) => {
+
     compiler.plugin('invalid', () => {
       // if (isInteractive) {
       //   clearConsole();
       // }
       console.log('Compiling...');
-    });
+    })
+
+    // compiler.plugin('make', () => {
+    //   console.log('making')
+    // })
+
+    // compiler.plugin('emit', () => {
+    //   console.log('emit')
+    // })
+
+    // compiler.plugin("compilation", function(compilation) {
+    //   //the main compilation instance
+    //   //all subsequent methods are derived from compilation.plugin
+    //   console.log(compilation)
+    // });
 
     compiler.plugin('done',  stats => {
       const message = formatWebpackMessages(stats.toJson({}, true))
+      console.log(message)
       // if sucessful
       if (message.errors.length < 1 && message.warnings.length < 1) {
         console.log(chalk.green('\n\n\nCompiled successully!'))
+        
+        resolve()
       } else {
         console.log(chalk.red(message.errors))
+        
+        reject(message)
         // console.log(chalk.yellow(message.warnings))
       }
       console.log('Finished compile')
-      resolve()
+      
     })
 
   })

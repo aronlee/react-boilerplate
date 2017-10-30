@@ -1,9 +1,0 @@
-{
-  "project":"react-boilerplate",
-  "staticPublicPath": {
-    "dev": "http://127.0.0.1/react-boilerplate/",
-    "test": "http://127.0.0.1/react-boilerplate/",
-    "beta": "http://127.0.0.1/react-boilerplate/",
-    "prod": "http://127.0.0.1/react-boilerplate/"
-  }
-}

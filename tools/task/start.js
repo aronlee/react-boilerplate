@@ -19,31 +19,6 @@ import {
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000
 const HOST = process.env.HOST || '0.0.0.0'
 
-// console.log(require.main === module, process.argv, __filename)
-// console.log(cp)
-
-
-// const ls = cp.spawn('node', ['-v'])
-
-// ls.stdout.on('data', data => {
-//   console.log(`stdout: ${data}`);
-// })
-// ls.stderr.on('data', (data) => {
-//   console.log(`stderr: ${data}`);
-// });
-// ls.on('close', (code) => {
-//   console.log(`子进程退出码：${code}`);
-// });
-
-// const cmd = cp.exec('node -v', (err, stdout, stderr) => {
-//   if (err) {
-//     console.error(chalk.red(`exec error: ${error}`));
-//     return;
-//   }
-//   console.log(chalk.green(`stdout: ${stdout}`));
-//   console.log(chalk.red(`stderr: ${stderr}`));
-// })
-
 function createCompiler(compiler) {
   return new Promise((resolve, reject) => {
 
@@ -93,7 +68,7 @@ async function start() {
   const server = express();
   const compiler = webpack(webpackConf);
 
-  server.use(express.static(path.resolve(process.cwd(), './public')));
+  // server.use(express.static(path.resolve(process.cwd(), './public')));
 
   server.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConf.output.publicPath,
@@ -112,6 +87,10 @@ async function start() {
   server.use(webpackHotMiddleware(compiler, {
     log: false,
   }))
+
+  server.all('*', (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), './public/index.html'))
+  })
 
   server.listen(DEFAULT_PORT, HOST, err => {
     if (err) {
@@ -132,30 +111,3 @@ async function start() {
 export default start;
 
 
-
-// const app = express()
-
-// const compiler = webpack(webpackConf, function(err, stats) {
-
-//   const jsonStats = stats.toJson({}, true)
-
-//   const errors = jsonStats.errors.map(message => {
-//     var lines = message.split('\n');
-//     console.log(lines)
-//     return message
-//   })
-//   // if(jsonStats.errors.length > 0) {
-//   //     return console.log(chalk.red(jsonStats.errors.toString()))
-//   // }
-//   // if(jsonStats.warnings.length > 0) {
-//   //     return console.log(chalk.red(jsonStats.warnings.toString()))
-//   // }
-
-//   // if (err || stats.hasErrors() || stats.hasWarnings()) {
-//   //   process.exit(1);
-//   // } else {
-//   //   process.exit(0);
-//   // }
-// })
-
-// let server;

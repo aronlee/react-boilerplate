@@ -1,3 +1,5 @@
+import MainRouter from './router'
+
 export default class MainPage extends React.Component {
 
   constructor(props) {
@@ -5,7 +7,12 @@ export default class MainPage extends React.Component {
   }
 
   render() {
-    return <div>111111</div>
+    return (
+      <div>
+        <div>111111</div>
+        <MainRouter />
+      </div>
+    )
   }
   
 }

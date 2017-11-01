@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import CircularDependencyPlugin from 'circular-dependency-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import baseConfig from './webpack.base.config'
+import ExtractIndexPlugin from './plugins/extract-index-plugin'
 
 module.exports = baseConfig({
   isDebug: true,
@@ -24,6 +25,9 @@ module.exports = baseConfig({
       exclude: /a\.js|node_modules/, // exclude node_modules
       failOnError: false, // show a warning when there is a circular dependency
     }),
+    new ExtractIndexPlugin({
+      opts1: '1'
+    })
     // https://github.com/webpack-contrib/webpack-bundle-analyzer
     // new BundleAnalyzerPlugin(),
   ],

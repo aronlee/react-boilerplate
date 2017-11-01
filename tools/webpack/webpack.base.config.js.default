@@ -58,17 +58,34 @@ export default ({ isDebug, performance, plugins, entry = [] }) => {
   
         // style
         {
-          test: reStyle,
+          test: /\.(css|less|scss|sass)$/,
           rules: [
             {
+              include: path.resolve(process.cwd(), './src'),
               loader: 'style-loader',
             },
+            // Process external/third-party styles
             {
+              exclude: path.resolve(process.cwd(), './src'),
+              loader: 'css-loader',
+              options: {
+                sourceMap: isDebug,
+                minimize: isDebug ? false : minimizeCssOptions,
+              },
+            },
+            // Process internal/project styles (from src folder)
+            {
+              include: path.resolve(process.cwd(), './src'),
               loader: 'css-loader',
               options: {
                 // CSS Loader https://github.com/webpack/css-loader
-                // importLoaders: 1,
+                importLoaders: 1,
                 sourceMap: isDebug,
+                // CSS Modules https://github.com/css-modules/css-modules
+                // modules: true,
+                localIdentName: isDebug
+                  ? staticAssetName
+                  : '[hash:base64:5]',
                 // CSS Nano http://cssnano.co/
                 minimize: isDebug ? false : minimizeCssOptions,
               },
@@ -171,8 +188,6 @@ export default ({ isDebug, performance, plugins, entry = [] }) => {
         fetch: 'exports-loader?self.fetch!whatwg-fetch',
         React: 'react',
         ReactDOM: 'react-dom',
-        $: 'jquery',
-        jQuery: "jquery",
       }, provides)),
   
       // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`

@@ -45,15 +45,11 @@ function createCompiler(compiler) {
 
     compiler.plugin('done',  stats => {
       const message = formatWebpackMessages(stats.toJson({}, true))
-      console.log(message)
       // if sucessful
       if (message.errors.length < 1 && message.warnings.length < 1) {
-        console.log(chalk.green('\n\n\nCompiled successully!'))
-        
+        console.log(chalk.green('\nCompiled successully!'))
         resolve()
       } else {
-        console.log(chalk.red(message.errors))
-        
         reject(message)
         // console.log(chalk.yellow(message.warnings))
       }

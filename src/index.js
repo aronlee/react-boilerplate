@@ -13,12 +13,6 @@ export default class MainPage extends React.Component {
 
   constructor(props) {
     super(props)
-    const str = 'main-atention-come'
-    const aaa = str.replace(/-([a-z])/g, str => {
-      console.log(str)
-      return str.substr(1).toUpperCase()
-    })
-    console.log(aaa)
   }
 
   render() {
@@ -29,10 +23,12 @@ export default class MainPage extends React.Component {
             <Link className="main-left-link" to="/list">list</Link>
             <Link className="main-left-link" to="/detail">detail</Link>
             <Link className="main-left-link" to="/study">study</Link>
+            <Link className="main-left-link" to="/game">study</Link>
           </div>
           <div className="main-right">
             <Route path="/list" component={List} />
             <Route path="/detail" component={Detail} />
+            <Route path="/study" component={StudyJs} />
             <Route path="/study" component={StudyJs} />
           </div>
         </div>

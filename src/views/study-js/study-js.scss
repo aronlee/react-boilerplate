@@ -1,0 +1,28 @@
+.study-example-img-1 {
+  width: 307px;
+}
+.study-example-dl {
+  > dt {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  > dd {
+    margin-bottom: 8px;
+  }
+}
+.study-example-item {
+  padding-bottom: 16px;
+}
+.study-example-code {
+  padding: 8px 16px;
+  border-left: 4px solid #ccc;
+  background-color: #f5f5f5;
+}
+.study-example-isselected {
+  font-size: 12px;
+  margin-left: 4px;
+  color: #666;
+  padding-left: 4px;
+  border-left:  1px solid #ccc;
+}

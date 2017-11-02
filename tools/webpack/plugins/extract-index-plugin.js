@@ -10,5 +10,9 @@ export default class ExtractIndexPlugin {
       console.log(this.options)
       console.log('my plugin apply done')
     })
+    // compiler.plugin('emit', () => {
+    //   // console.log(this.options)
+    //   console.log('my plugin apply emit')
+    // })
   }
 }

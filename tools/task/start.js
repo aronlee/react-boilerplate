@@ -44,6 +44,7 @@ function createCompiler(compiler) {
     // });
 
     compiler.plugin('done',  stats => {
+      console.log(chalk.yellow(stats.compilation))
       const message = formatWebpackMessages(stats.toJson({}, true))
       // if sucessful
       if (message.errors.length < 1 && message.warnings.length < 1) {

@@ -6,6 +6,8 @@ body{
     color: #333;
     padding: 0;
     margin: 0;
+    font-size: 12px;
+    font-family: "Microsoft YaHei";
 }
 .pull-right{
     float: right;
@@ -45,4 +47,6 @@ body{
 
 .main-right {
   padding: 20px;
+  max-width: 1000px;
+  box-sizing: border-box;
 }

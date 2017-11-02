@@ -22,5 +22,5 @@ function getFuncFromTxt(url) {
 
 export default {
   getFuncInnerStr,
-  getFuncFromTxt
+  getFuncFromTxt,
 }

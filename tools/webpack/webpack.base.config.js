@@ -9,7 +9,7 @@ const NodeEnv = process.env.NODE_ENV
 // https://github.com/webpack/loader-utils/issues/56
 process.traceDeprecation = true
 
-const reScript = /\.(js|jsx)$/;
+const reScript = /\.(js|jsx|ts|tsx)$/;
 const reStyle = /\.(css|less|scss|sass)$/;
 const reImage = /\.(bmp|gif|jpg|jpeg|png|svg)$/;
 // const reFile = /\.(png|jpg|gif|woff|woff2|ttf|eot|svg|swf)$/;
@@ -54,6 +54,33 @@ export default ({ isDebug, performance, plugins, entry = [] }) => {
               cacheDirectory: true,
             },
           },
+          // rules: [
+          //   {
+          //     test: /.(ts|tsx)$/,
+          //     use: [
+          //       {
+          //         loader: 'ts-loader',
+          //       },
+          //       {
+          //         loader: 'babel-loader',
+          //         options: {
+          //           cacheDirectory: true,
+          //         },
+          //       },
+          //     ]
+          //   },
+          //   {
+          //     test: /.(js|jsx)$/,
+          //     use: [
+          //       {
+          //         loader: 'babel-loader',
+          //         options: {
+          //           cacheDirectory: true,
+          //         },
+          //       },
+          //     ]
+          //   }
+          // ],
         },
   
         // style

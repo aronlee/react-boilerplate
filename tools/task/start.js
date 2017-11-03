@@ -29,22 +29,8 @@ function createCompiler(compiler) {
       console.log('Compiling...');
     })
 
-    // compiler.plugin('make', () => {
-    //   console.log('making')
-    // })
-
-    // compiler.plugin('emit', () => {
-    //   console.log('emit')
-    // })
-
-    // compiler.plugin("compilation", function(compilation) {
-    //   //the main compilation instance
-    //   //all subsequent methods are derived from compilation.plugin
-    //   console.log(compilation)
-    // });
-
     compiler.plugin('done',  stats => {
-      console.log(chalk.yellow(stats.compilation))
+      // console.log(chalk.yellow(stats.compilation))
       const message = formatWebpackMessages(stats.toJson({}, true))
       // if sucessful
       if (message.errors.length < 1 && message.warnings.length < 1) {

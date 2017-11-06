@@ -1,13 +1,5 @@
-import chalk from 'chalk'
-import moment from 'moment'
-
-function formatTime(time) {
-  return `[${moment(time).format('YYYY-MM-DD HH:mm:ss')}]`
-}
-
-function logInfo() {
-  console.log.call(console, formatTime(Date.now()), ...arguments)
-}
+import chalk from 'chalk';
+import { logInfo } from "../util";
 
 function run(fn, options) {
   const task = typeof fn.default === 'function' ? fn.default : fn;
@@ -26,7 +18,9 @@ function run(fn, options) {
 if (require.main === module) {
   const module = require(`./${process.argv[2]}.js`);
   run(module).catch(err => {
-    console.error(err.stack);
+    if (err) {
+      console.error(err.stack);
+    }
     process.exit(1);
   });
 }

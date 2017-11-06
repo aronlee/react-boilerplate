@@ -2,7 +2,7 @@ import webpack from 'webpack'
 import path from 'path'
 
 import { alias, entries, provides } from "../files-config"
-import { mergeModleToEntry } from './util'
+import { mergeModleToEntry } from '../util'
 
 const NodeEnv = process.env.NODE_ENV
 

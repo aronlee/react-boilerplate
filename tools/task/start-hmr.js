@@ -5,13 +5,11 @@ import path from 'path'
 import browserSync from 'browser-sync';
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpackConf from '../webpack/webpack.dev.config'
+import webpackConf from '../webpack/webpack.hmr.config'
 import formatWebpackMessages from 'react-dev-utils/formatWebpackMessages'
 import openBrowser from 'react-dev-utils/openBrowser'
+// import clearConsole from 'react-dev-utils/clearConsole'
 import {
-  // choosePort,
-  // createCompiler,
-  // prepareProxy,
   prepareUrls,
 } from 'react-dev-utils/WebpackDevServerUtils'
 
@@ -21,6 +19,7 @@ const isDebug = !process.argv.includes('--release');
 
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000
 const HOST = process.env.HOST || '0.0.0.0'
+const isInteractive = process.stdout.isTTY
 
 function createCompilationPromise(name, compiler, config) {
   return new Promise((resolve, reject) => {
@@ -74,49 +73,35 @@ async function start() {
   server.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConf.output.publicPath,
     quiet: true,
-    stats: {
-      colors: true,
-      hash: false,
-      version: false,
-      timings: false,
-      assets: false,
-      chunks: false,
-      children: false
-    },
+    stats: webpackConf.stats,
   }))
 
   server.use(webpackHotMiddleware(compiler, {
     log: false,
   }))
 
-  server.all('*', (req, res) => {
-    res.sendFile(path.resolve(process.cwd(), './public/index.html'))
-  })
+  await createCompilationPromise('client', compiler, webpackConf);
 
   server.listen(DEFAULT_PORT, HOST, err => {
     if (err) {
-      return console.log(chalk.red(err));
+      return console.info(chalk.red(err));
     }
     console.log(chalk.cyan('Starting the development server...\n'));
     const urls = prepareUrls('http', HOST, DEFAULT_PORT);
     openBrowser(urls.localUrlForBrowser);
-  });
+  })
 
-  // const clientPromise = createCompilationPromise('client', compiler, webpackConf);
-  await createCompilationPromise('client', compiler, webpackConf);
-
-  await new Promise((resolve, reject) =>
-    browserSync.create().init(
-      {
-        // https://www.browsersync.io/docs/options
-        server: 'src/server.js',
-        middleware: [server],
-        open: !process.argv.includes('--silent'),
-        ...(true ? {} : { notify: false, ui: false }),
-      },
-      (error, bs) => (error ? reject(error) : resolve(bs)),
-    ),
-  );
+  // await new Promise((resolve, reject) =>
+  //   browserSync.create().init(
+  //     {
+  //       // https://www.browsersync.io/docs/options
+  //       server: 'src/server.js',
+  //       middleware: [server],
+  //       open: !process.argv.includes('--silent'),
+  //     },
+  //     (error, bs) => (error ? reject(error) : resolve(bs)),
+  //   ),
+  // );
 
   return server;
 }

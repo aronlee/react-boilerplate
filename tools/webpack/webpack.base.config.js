@@ -7,22 +7,24 @@ import { mergeModleToEntry } from '../util'
 const NodeEnv = process.env.NODE_ENV
 
 // https://github.com/webpack/loader-utils/issues/56
-process.traceDeprecation = true
+// process.traceDeprecation = true
 
+const isVerbose = process.argv.includes('--verbose');
 const reScript = /\.jsx?$/;
 const reTs = /\.tsx?$/;
 const reStyle = /\.(css|less|scss|sass)$/;
 const reImage = /\.(bmp|gif|jpg|jpeg|png|svg)$/;
-// const reFile = /\.(png|jpg|gif|woff|woff2|ttf|eot|svg|swf)$/;
 const staticAssetName = '[name]_[sha512:hash:base64:7].[ext]'; // 打包后的静态文件名
+
 
 const minimizeCssOptions = {
   discardComments: { removeAll: true },
 };
 
-export default ({ isDebug, performance, plugins, entry = [] }) => ({
+export default ({ isDebug, performance, plugins, entry = [], watch = false }) => ({
   context: `${process.cwd()}/src`,
   entry: mergeModleToEntry(entries, entry),
+  watch: watch,
   // Don't attempt to continue if there are any errors.
   // 一旦发生错误，立即终止
   bail: !isDebug,
@@ -55,23 +57,6 @@ export default ({ isDebug, performance, plugins, entry = [] }) => ({
           },
         }
       },
-
-      // TypeScript
-      // {
-      //   test: reTs,
-      //   exclude: /node_modules/,
-      //   rules: [
-      //     {
-      //       loader: 'ts-loader'
-      //     }
-      //     // {
-      //     //   loader: 'babel-loader',
-      //     //   options: {
-      //     //     cacheDirectory: true,
-      //     //   },
-      //     // }
-      //   ]
-      // },
 
       // style
       {
@@ -207,17 +192,24 @@ export default ({ isDebug, performance, plugins, entry = [] }) => ({
     }),
     
     new webpack.NamedModulesPlugin(),
+    
+    // Moment.js is an extremely popular library that bundles large locale files
+    // by default due to how Webpack interprets its code. This is a practical
+    // solution that requires the user to opt into importing specific locales.
+    // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
+    // You can remove this if you don't use Moment.js:
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ]),
   stats: {
-    cached: isDebug,
-    cachedAssets: isDebug,
-    chunks: isDebug,
-    chunkModules: isDebug,
+    cached: isVerbose,
+    cachedAssets: isVerbose,
+    chunks: isVerbose,
+    chunkModules: isVerbose,
     colors: true,
-    hash: isDebug,
-    modules: isDebug,
+    hash: isVerbose,
+    modules: isVerbose,
     reasons: isDebug,
     timings: true,
-    version: isDebug,
+    version: isVerbose,
   },
 })

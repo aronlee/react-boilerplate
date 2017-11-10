@@ -1,0 +1,24 @@
+const student = {
+  age: 12,
+  sex: "famale",
+  name: "Mike",
+  grade: "B",
+}
+
+console.log(JSON.stringify(student, (key, value) => {
+  if (typeof value === "string") {
+    return undefined;
+  }
+  return value;
+}, 2))
+// ==>
+//  {
+//    "age": 12
+//  }
+
+console.log(JSON.stringify(student, ['age', 'grade'], 2))
+// ==>
+//  {
+//    "age": 12,
+//    "grade": "B"
+//  }

@@ -28,6 +28,7 @@ export default class MainPage extends React.Component {
             <Link className="main-left-link" to="/list">list</Link>
             <Link className="main-left-link" to="/detail">detail</Link>
             <Link className="main-left-link" to="/study">study</Link>
+            <Link className="main-left-link" to="/study">study</Link>
             {/* <Link className="main-left-link" to="/abattoir-game">abattoir-game</Link> */}
           </div>
           <div className="main-right">

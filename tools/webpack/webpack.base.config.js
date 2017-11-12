@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import path from 'path'
+import WebpackNotifierPlugin from 'webpack-build-notifier'
 
 import { alias, entries, provides } from "../files-config"
 import { mergeModleToEntry } from '../util'
@@ -190,9 +191,14 @@ export default ({ isDebug, performance, plugins, entry = [], watch = false }) =>
       minChunks: 2,
       async: true,
     }),
-    
+
+    new WebpackNotifierPlugin({
+      title: 'Webpack compile successfully!',
+      alwaysNotify: true
+    }),
+
     new webpack.NamedModulesPlugin(),
-    
+
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
     // solution that requires the user to opt into importing specific locales.

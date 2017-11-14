@@ -59,7 +59,7 @@ const getComponent = (cb) => (
           Component: component
         })
       }).catch(err => {
-        if(err)console.err(err)
+        if(err)console.error(err)
       })
     }
     render() {

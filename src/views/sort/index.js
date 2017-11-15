@@ -2,6 +2,7 @@ import { error } from "util";
 import bubSort from '../../algorithm/sort/bub'
 import selSort from '../../algorithm/sort/sel'
 import insSort from '../../algorithm/sort/ins'
+import mergeSort from '../../algorithm/sort/merge'
 import './sort.scss'
 
 export default class Sort extends React.Component {
@@ -17,7 +18,6 @@ export default class Sort extends React.Component {
   componentDidMount() {
     const { originalArr } = this.state
     let temp = Object.assign([], originalArr)
-    console.log(temp)
     // 冒泡排序
     // let arr = bubSort(temp)
     // 选择排序

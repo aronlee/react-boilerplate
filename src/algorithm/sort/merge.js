@@ -27,6 +27,7 @@ function merge(arr1, arr2) {
     }
     if (arr1[i] < arr2[j]) {
       mergeArr.push(arr1[i]);
+      
       i += 1;
     } else {
       mergeArr.push(arr2[j]);

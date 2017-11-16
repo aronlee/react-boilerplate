@@ -1,24 +1,28 @@
-export default function mergeSort(arr, reaverse) {
+// export default function mergeSort(arr) {
+//   let result = [];
+//   const len = arr.len;
+//   const midIdx = Math.ceil(len / 2);
+//   const arrLeft = arr.slice(0, midIdx);
+//   const arrRight = arr.slice(midIdx, len);
 
+//   result = mergeSort(arrLeft, arrRight);
+//   return result;
+// }
+
+export default function mergeSort(arr) {
   const len = arr.length;
   let arrIt = [];
   let flag = 0;
+  let result = [];
   for (let i = 0; i < len - 1; i++) {
     if (arr[i] > arr[i + 1]) {
-      arrIt.push(arr.slice(flag, i + 1));
+      let temp = arr.slice(flag, i + 1);
+      result = result.length ? merge(result, temp) : temp;
       flag = i + 1;
     }
   }
-  arrIt.push(arr.slice(flag, len));
-
-  let len2 = arrIt.length;
-  let result = arrIt[0];
-  for (let i = 1; i < len2; i++) {
-    result = merge(result, arrIt[i]);
-  }
-
+  result = merge(result, arr.slice(flag, len));
   return result;
-
 }
 
 
@@ -56,7 +60,6 @@ export function merge(arr1, arr2) {
     }
     if (arr1[i] < arr2[j]) {
       mergeArr.push(arr1[i]);
-
       i += 1;
     } else {
       mergeArr.push(arr2[j]);

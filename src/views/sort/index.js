@@ -23,11 +23,14 @@ export default class Sort extends React.Component {
     // 选择排序
     // let arr = selSort(temp)
     // 插入排序
-    let arr = insSort(temp)
+    // let arr = insSort(temp)
+    // 归并排序
+    let arr = mergeSort(temp)
 
     this.setState({
       processedArr: arr
     })
+
   }
 
   // 生成随机的个数为len， 0 - max的随机数

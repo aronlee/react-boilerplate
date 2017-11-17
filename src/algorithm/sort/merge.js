@@ -1,14 +1,3 @@
-// export default function mergeSort(arr) {
-//   let result = [];
-//   const len = arr.len;
-//   const midIdx = Math.ceil(len / 2);
-//   const arrLeft = arr.slice(0, midIdx);
-//   const arrRight = arr.slice(midIdx, len);
-
-//   result = mergeSort(arrLeft, arrRight);
-//   return result;
-// }
-
 export default function mergeSort(arr) {
   const len = arr.length;
   let arrIt = [];
@@ -40,6 +29,33 @@ export function mergeSortNotRecursion(arr, reaverse) {
   }
   result = merge(result, arr.slice(flag, len));
   return result;
+}
+
+export function mergeBetter(arr, low, mid, high, spareArr) {
+  const len1 = mid - low + 1;
+  const len2 = high - mid;
+  let mergeArr = []
+
+  let i = low, j = mid + 1;
+
+  while (true) {
+    if (i === len1) {
+      mergeArr = mergeArr.concat(arr2.slice(j, len2))
+      break;
+    }
+    if (j === len2) {
+      mergeArr = mergeArr.concat(arr1.slice(i, len1))
+      break;
+    }
+    if (arr1[i] < arr2[j]) {
+      mergeArr.push(arr1[i]);
+      i += 1;
+    } else {
+      mergeArr.push(arr2[j]);
+      j += 1;
+    }
+  }
+  return mergeArr
 }
 
 export function merge(arr1, arr2) {

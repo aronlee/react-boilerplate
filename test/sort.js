@@ -5,7 +5,7 @@ import selSort from '../src/algorithm/sort/sel'
 import insSort from '../src/algorithm/sort/ins'
 import mergeSort, { merge, mergeSortNotRecursion } from '../src/algorithm/sort/merge'
 
-describe('bub sort function may right!', function () {
+describe('所有的排序函数可能都测试通过!', function () {
 
   function sortNum(a, b) {
     return a - b

@@ -10,7 +10,7 @@ export default class Sort extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      originalArr: this.getRomdomArr(),
+      originalArr: this.getRomdomArr(1000, 10000),
       processedArr: []
     }
   }
@@ -37,7 +37,7 @@ export default class Sort extends React.Component {
   // max 不能小于len
   getRomdomArr(len = 12, max = 50) {
     if (len > max) {
-      throw new error('max can\'t be bigger than len!')
+      throw new error('max can\'t be bigger th  an len!')
     }
     let arr = new Array(len)
     for (let i = 0; i < len; i++) {

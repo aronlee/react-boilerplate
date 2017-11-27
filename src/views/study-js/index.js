@@ -19,6 +19,17 @@ export default class StudyJs extends React.Component {
 
   componentWillMount() {
     this.getCodeToState()
+
+    var t = {
+      a: undefined,
+      b: 1,
+      c: '22',
+      d: undefined,
+    }
+
+    for (var i in t) {
+      console.log(i, t[i])
+    }
   }
 
   getCodeToState() {

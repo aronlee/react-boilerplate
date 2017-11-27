@@ -1,17 +1,35 @@
+// export function sortTest(a) {
+//   const len = arr.length;
+//   let spareArr = new Array(len);
+//   sortTestInner(arr, 0, len - 1, spareArr)
+// }
+
+// export function sortTestInner(arr, start, end, spareArr) {
+//   // if (start >= end) return;
+//   let mid = Math.floor((start + end) / 2);
+//   if (mid > start) {
+//     sortTestInner(arr, start, mid, spareArr);
+//   }
+//   if ((end - mid) > 1) {
+//     sortTestInner(arr, mid + 1, end, spareArr);
+//   }
+//   mergeBetter(arr, start, mid, end, spareArr);
+// }
+
 export default function mergeSort(arr) {
   const len = arr.length;
-  let arrIt = [];
-  let flag = 0;
-  let result = [];
-  for (let i = 0; i < len - 1; i++) {
-    if (arr[i] > arr[i + 1]) {
-      let temp = arr.slice(flag, i + 1);
-      result = result.length ? merge(result, temp) : temp;
-      flag = i + 1;
-    }
-  }
-  result = merge(result, arr.slice(flag, len));
-  return result;
+  let spareArr = new Array(len);
+  mergeSortInner(arr, 0, len - 1, spareArr)
+  return arr;
+}
+
+export function mergeSortInner(arr, start, end, spareArr) {
+  if (end <= start)
+    return;
+  let mid = Math.floor(start + (end - start) / 2);
+  mergeSortInner(arr, start, mid, spareArr);
+  mergeSortInner(arr, mid + 1, end, spareArr);
+  mergeBetter(arr, start, mid, end, spareArr);
 }
 
 
@@ -32,30 +50,23 @@ export function mergeSortNotRecursion(arr, reaverse) {
 }
 
 export function mergeBetter(arr, low, mid, high, spareArr) {
-  const len1 = mid - low + 1;
-  const len2 = high - mid;
-  let mergeArr = []
+  let j = low, k = mid + 1;
 
-  let i = low, j = mid + 1;
+  for (let i = low; i <= high; i++) {
+    spareArr[i] = arr[i];
+  }
 
-  while (true) {
-    if (i === len1) {
-      mergeArr = mergeArr.concat(arr2.slice(j, len2))
-      break;
-    }
-    if (j === len2) {
-      mergeArr = mergeArr.concat(arr1.slice(i, len1))
-      break;
-    }
-    if (arr1[i] < arr2[j]) {
-      mergeArr.push(arr1[i]);
-      i += 1;
+  for (let i = low; i <= high; i++) {
+    if (j > mid) {
+      arr[i] = spareArr[k++]
+    } else if (k > high) {
+      arr[i] = spareArr[j++]
+    } else if (spareArr[j] <= spareArr[k]) {
+      arr[i] = spareArr[j++]
     } else {
-      mergeArr.push(arr2[j]);
-      j += 1;
+      arr[i] = spareArr[k++]
     }
   }
-  return mergeArr
 }
 
 export function merge(arr1, arr2) {

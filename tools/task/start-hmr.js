@@ -17,7 +17,7 @@ import { logInfo } from "../util";
 
 const isDebug = !process.argv.includes('--release');
 
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3003
 const HOST = process.env.HOST || '0.0.0.0'
 const isInteractive = process.stdout.isTTY
 

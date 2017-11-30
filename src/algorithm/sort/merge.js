@@ -1,21 +1,3 @@
-// export function sortTest(a) {
-//   const len = arr.length;
-//   let spareArr = new Array(len);
-//   sortTestInner(arr, 0, len - 1, spareArr)
-// }
-
-// export function sortTestInner(arr, start, end, spareArr) {
-//   // if (start >= end) return;
-//   let mid = Math.floor((start + end) / 2);
-//   if (mid > start) {
-//     sortTestInner(arr, start, mid, spareArr);
-//   }
-//   if ((end - mid) > 1) {
-//     sortTestInner(arr, mid + 1, end, spareArr);
-//   }
-//   mergeBetter(arr, start, mid, end, spareArr);
-// }
-
 export default function mergeSort(arr) {
   const len = arr.length;
   let spareArr = new Array(len);

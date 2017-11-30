@@ -10,7 +10,7 @@ export default class Sort extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      originalArr: this.getRomdomArr(1000, 10000),
+      originalArr: this.getRomdomArr(11, 50),
       processedArr: []
     }
   }

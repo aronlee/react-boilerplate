@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import path from 'path'
+import EslintFriendlyFormatter from 'eslint-friendly-formatter'
 import WebpackNotifierPlugin from 'webpack-build-notifier'
 
 import { alias, entries, provides } from "../files-config"
@@ -47,6 +48,15 @@ export default ({ isDebug, performance, plugins, entry = [], watch = false }) =>
   },
   module: {
     rules: [
+      {
+        test: reScript,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        exclude: /node_modules/,
+        options: {
+          formatter: EslintFriendlyFormatter
+        }
+			},
       // js Transform all .js files required somewhere with Babel
       {
         test: reScript,

@@ -1,12 +1,29 @@
 {
   "env": {
-      "browser": true,
-      "es6": true
-  },
-  "extends": "vue",
-  "plugins": ["vue"],
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "commonjs": true
+},
+  "extends": "eslint:recommended",
+  "plugins": [
+    "vue"
+  ],
+  "parser": "babel-eslint",
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "classes": true,
+      "modules": true,
+      "defaultParams": true,
+      "globalReturn": true,
+      "impliedStrict": true,
+      "jsx": true,
+      "experimentalObjectRestSpread": true,
+      "allowImportExportEverywhere": false
+    }
   },
   "rules": {
     "indent": [
@@ -15,13 +32,23 @@
     ],
     "quotes": [
       "error",
-      "double"
+      "single"
     ],
     "semi": [
       "error",
       "never"
     ],
     "linebreak-style": 0,
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "never",
+        "objects": "always",
+        "imports": "always",
+        "exports": "always",
+        "functions": "never"
+      }
+    ]
   }
 }

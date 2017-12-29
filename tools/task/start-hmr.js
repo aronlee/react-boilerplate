@@ -1,25 +1,25 @@
 import webpack from 'webpack'
 import chalk from 'chalk'
 import express from 'express'
-import path from 'path'
-import browserSync from 'browser-sync';
+// import path from 'path'
+// import browserSync from 'browser-sync';
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConf from '../webpack/webpack.hmr.config'
-import formatWebpackMessages from 'react-dev-utils/formatWebpackMessages'
+// import formatWebpackMessages from 'react-dev-utils/formatWebpackMessages'
 import openBrowser from 'react-dev-utils/openBrowser'
 // import clearConsole from 'react-dev-utils/clearConsole'
 import {
   prepareUrls,
 } from 'react-dev-utils/WebpackDevServerUtils'
 
-import { logInfo } from "../util";
+import { logInfo } from '../util'
 
-const isDebug = !process.argv.includes('--release');
+// const isDebug = !process.argv.includes('--release');
 
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3003
 const HOST = process.env.HOST || '0.0.0.0'
-const isInteractive = process.stdout.isTTY
+// const isInteractive = process.stdout.isTTY
 
 function createCompilationPromise(name, compiler, config) {
   return new Promise((resolve, reject) => {
@@ -31,7 +31,7 @@ function createCompilationPromise(name, compiler, config) {
     });
 
     // compiler.plugin('done', stats => {
-      
+
     //   // console.info(stats.toString(config.stats));
     //   const message = formatWebpackMessages(stats.toJson({}, true))
 
@@ -49,26 +49,26 @@ function createCompilationPromise(name, compiler, config) {
     // })
 
     compiler.plugin('done', stats => {
-      console.info(stats.toString(config.stats));
-      const timeEnd = new Date();
-      const time = timeEnd.getTime() - timeStart.getTime();
+      console.info(stats.toString(config.stats))
+      const timeEnd = new Date()
+      const time = timeEnd.getTime() - timeStart.getTime()
       if (stats.hasErrors()) {
         logInfo(` Failed to compile '${name}' after ${time} ms`)
-        reject(new Error('Compilation failed!'));
+        reject(new Error('Compilation failed!'))
       } else {
         logInfo(` Finished '${name}' compilation after ${time} ms`)
-        resolve(stats);
+        resolve(stats)
       }
-    });
+    })
 
   })
 }
 
 async function start() {
-  const server = express();
-  const compiler = webpack(webpackConf);
+  const server = express()
+  const compiler = webpack(webpackConf)
 
-  // server.use(express.static(path.resolve(process.cwd(), './public')));
+  // server.use(express.static(path.resolve(process.cwd(), './public')))
 
   server.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConf.output.publicPath,
@@ -80,15 +80,17 @@ async function start() {
     log: false,
   }))
 
-  await createCompilationPromise('client', compiler, webpackConf);
+  await createCompilationPromise('client', compiler, webpackConf)
 
-  server.listen(DEFAULT_PORT, HOST, err => {
+  server.listen(DEFAULT_PORT, HOST, function(err) {
     if (err) {
-      return console.info(chalk.red(err));
+      return console.info(chalk.red(err))
     }
-    console.log(chalk.cyan('Starting the development server...\n'));
-    const urls = prepareUrls('http', HOST, DEFAULT_PORT);
-    openBrowser(urls.localUrlForBrowser);
+    const address = this.address()
+    console.log(chalk.cyan('Starting the development server...\n'))
+    console.log(`Server start at ${chalk.magenta.underline(`http://${address.address}:${address.port}`)}`)
+    const urls = prepareUrls('http', HOST, DEFAULT_PORT)
+    openBrowser(urls.localUrlForBrowser)
   })
 
   // await new Promise((resolve, reject) =>
@@ -103,9 +105,9 @@ async function start() {
   //   ),
   // );
 
-  return server;
+  return server
 }
 
-export default start;
+export default start
 
 

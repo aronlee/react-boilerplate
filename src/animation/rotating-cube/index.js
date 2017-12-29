@@ -1,21 +1,22 @@
+import React, { Component } from 'react'
 import classnames from 'classnames'
 import './rotating-cube.scss'
 
-export default class RotatingCube extends React.Component {
+export default class RotatingCube extends Component {
 
   static types = ['cube', 'ring']
 
   constructor(props) {
     super(props)
     this.state = {
-      type: 0
+      type: 0,
     }
   }
 
   changeType() {
     const { type } = this.state
     this.setState({
-      type: type === 0 ? 1 : 0
+      type: type === 0 ? 1 : 0,
     })
   }
 

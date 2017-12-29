@@ -1,18 +1,20 @@
+import React, { Component } from 'react'
+
 const getComponent = (cb) => (
-  class AsyncGetJs extends React.Component {
+  class AsyncGetJs extends Component {
     constructor(props){
       super(props)
       this.state = {
-        Component: null
+        Component: null,
       }
     }
     componentDidMount() {
       cb().then(component => {
         this.setState({
-          Component: component
+          Component: component,
         })
       }).catch(err => {
-        if(err)console.error(err)
+        if(err) throw err
       })
     }
     render() {

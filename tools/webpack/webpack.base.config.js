@@ -52,10 +52,7 @@ export default ({ isDebug, performance, plugins, entry = [], watch = false }) =>
         test: reScript,
         loader: 'eslint-loader',
         enforce: 'pre',
-        exclude: /node_modules/,
-        options: {
-          formatter: EslintFriendlyFormatter
-        }
+        exclude: /node_modules/
 			},
       // js Transform all .js files required somewhere with Babel
       {

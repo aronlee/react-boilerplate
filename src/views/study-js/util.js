@@ -1,4 +1,6 @@
 
+import $ from 'jquery'
+
 function getFuncInnerStr(func) {
   const reFilterFunc = /^function[\s]*\([\s]*\)[\s]*\{([\d\D]*)\}$/
   if (typeof func !== 'function') return ''
@@ -11,11 +13,11 @@ function getFuncFromTxt(url) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url,
-      dataType: 'text'
+      dataType: 'text',
     }).done(res => {
       resolve(res)
     }).fail(err => {
-      reject('get code error')
+      reject(err)
     })
   })
 }

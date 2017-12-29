@@ -1,3 +1,4 @@
+import React, { Component } from 'react'
 import { getFuncFromTxt } from './util'
 import './study-js.scss'
 
@@ -6,8 +7,8 @@ import example2 from './exm/2.text'
 import example2Img from './img/reduce-img.png'
 import example3 from './exm/3.text'
 
-export default class StudyJs extends React.Component {
-  
+export default class StudyJs extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -19,17 +20,6 @@ export default class StudyJs extends React.Component {
 
   componentWillMount() {
     this.getCodeToState()
-
-    var t = {
-      a: undefined,
-      b: 1,
-      c: '22',
-      d: undefined,
-    }
-
-    for (var i in t) {
-      console.log(i, t[i])
-    }
   }
 
   getCodeToState() {
@@ -40,7 +30,7 @@ export default class StudyJs extends React.Component {
     ].forEach(function(url, index){
       getFuncFromTxt(url).then(res => {
         this.setState({
-          [`code${index + 1}`]: res
+          [`code${index + 1}`]: res,
         })
       })
     }, this)
@@ -57,14 +47,14 @@ export default class StudyJs extends React.Component {
           <p></p>
         </div>
         <div  className="study-example-item">
-          <h2>{`2、Array.reduce(function(pre, next){})`}</h2>
+          <h2>{'2、Array.reduce(function(pre, next){})'}</h2>
           <pre className="study-example-code">{code2}</pre>
           <p>
             <img className="study-example-img-1" src={example2Img} alt=""/>
           </p>
         </div>
         <div  className="study-example-item">
-          <h2>{`3、JSON.stringify(value[, replacer [, space]])`}</h2>
+          <h2>{'3、JSON.stringify(value[, replacer [, space]])'}</h2>
           <pre className="study-example-code">{code3}</pre>
           <dl className="study-example-dl">
             <dt>value</dt>

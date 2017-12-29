@@ -1,6 +1,7 @@
+import React, { Component } from 'react'
 import PintuGame from './pintu-game'
 
-export default class ImageGame extends React.Component {
+export default class ImageGame extends Component {
 
   componentDidMount() {
     // init()

@@ -1,17 +1,18 @@
-import { error } from "util";
-import bubSort from '../../algorithm/sort/bub'
-import selSort from '../../algorithm/sort/sel'
-import insSort from '../../algorithm/sort/ins'
+import React, { Component } from 'react'
+import { error } from 'util'
+// import bubSort from '../../algorithm/sort/bub'
+// import selSort from '../../algorithm/sort/sel'
+// import insSort from '../../algorithm/sort/ins'
 import mergeSort from '../../algorithm/sort/merge'
 import './sort.scss'
 
-export default class Sort extends React.Component {
+export default class Sort extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       originalArr: this.getRomdomArr(11, 50),
-      processedArr: []
+      processedArr: [],
     }
   }
 
@@ -28,7 +29,7 @@ export default class Sort extends React.Component {
     let arr = mergeSort(temp)
 
     this.setState({
-      processedArr: arr
+      processedArr: arr,
     })
 
   }

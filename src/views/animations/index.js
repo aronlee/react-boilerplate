@@ -1,7 +1,8 @@
-import RotatingCude from '../../animation/rotating-cube';
+import React, { Component } from 'react'
+import RotatingCude from '../../animation/rotating-cube'
 import './animations.scss'
 
-export default class Animations extends React.Component {
+export default class Animations extends Component {
 
   render() {
     return (
@@ -11,7 +12,6 @@ export default class Animations extends React.Component {
             <li></li>
           </ul>
         </header>
-        <Route />
         <RotatingCude />
       </div>
     )

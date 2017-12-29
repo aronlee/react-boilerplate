@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
-import IMG_URL from './img/pintu_1.jpg';
-import './img-game.scss';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import IMG_URL from './img/pintu_1.jpg'
+import './img-game.scss'
 
-export default class ImageGame extends React.Component {
+export default class ImageGame extends Component {
 
   static propTypes = {
     size: PropTypes.number,
@@ -17,26 +18,26 @@ export default class ImageGame extends React.Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     const { part } = props
 
     this.state = {
-      step: 0
+      step: 0,
     }
 
     // 初始化空块的i， j值
     this.nullKey = {
       i: part - 1,
       j: part - 1,
-    };
+    }
 
     // 初始位置数组，用于校验正确答案
-    this.initPoints = new Array();
+    this.initPoints = new Array()
     // 每个小块展示图片位置数组，用于记录每个块展示图片的位置
-    this.pointsArr = new Array();
+    this.pointsArr = new Array()
 
-    this.initPointsArr();
-    this.shuffPointsArr();
+    this.initPointsArr()
+    this.shuffPointsArr()
   }
 
   componentDidMount() {
@@ -61,7 +62,7 @@ export default class ImageGame extends React.Component {
     for (let i = 0; i < part; i++) {
 
       let a = [],
-        b = [];
+        b = []
 
       for (let j = 0; j < part; j++) {
         if (i === part - 1 && j == part - 1) {
@@ -79,25 +80,24 @@ export default class ImageGame extends React.Component {
 
   // 打乱pointsArr数组
   shuffPointsArr() {
-    const { part } = this.props;
+    const { part } = this.props
 
     for (let i = 0; i < part; i++) {
-      let a = [];
       for (let j = 0; j < part; j++) {
 
-        const i1 = parseInt(Math.random() * part, 10);
-        const j1 = parseInt(Math.random() * part, 10);
+        const i1 = parseInt(Math.random() * part, 10)
+        const j1 = parseInt(Math.random() * part, 10)
 
-        let temp = this.pointsArr[i][j];
+        let temp = this.pointsArr[i][j]
         this.pointsArr[i][j] = this.pointsArr[i1][j1]
         this.pointsArr[i1][j1] = temp
 
         if (i1 === this.nullKey.i && j1 === this.nullKey.j) {
-          this.nullKey.i = i;
-          this.nullKey.j = j;
+          this.nullKey.i = i
+          this.nullKey.j = j
         } else if (i === this.nullKey.i && j === this.nullKey.j) {
-          this.nullKey.i = i1;
-          this.nullKey.j = j1;
+          this.nullKey.i = i1
+          this.nullKey.j = j1
         }
       }
     }
@@ -107,7 +107,7 @@ export default class ImageGame extends React.Component {
     const { size, part } = this.props
     const perWidth = size / part
 
-    context.clearRect(0, 0, size, size);
+    context.clearRect(0, 0, size, size)
 
     // 是否过关的标记
     let isSuccess = true
@@ -115,11 +115,11 @@ export default class ImageGame extends React.Component {
     for (let i = 0; i < part; i++) {
       for (let j = 0; j < part; j++) {
 
-        const startX = this.pointsArr[i][j].x;
-        const startY = this.pointsArr[i][j].y;
+        const startX = this.pointsArr[i][j].x
+        const startY = this.pointsArr[i][j].y
 
         if (startX !== this.initPoints[i] || startY !== this.initPoints[j]) {
-          isSuccess = false;
+          isSuccess = false
         }
 
         if (startX !== null && startY !== null) {
@@ -158,14 +158,14 @@ export default class ImageGame extends React.Component {
     const { size, part } = this.props
     const perWidth = size / part
 
-    context.beginPath();
+    context.beginPath()
     for (let i = 1; i < part; i++) {
-      context.moveTo(0, i * perWidth);
-      context.lineTo(size, i * perWidth);
-      context.moveTo(i * perWidth, 0);
-      context.lineTo(i * perWidth, size);
+      context.moveTo(0, i * perWidth)
+      context.lineTo(size, i * perWidth)
+      context.moveTo(i * perWidth, 0)
+      context.lineTo(i * perWidth, size)
     }
-    context.stroke();
+    context.stroke()
   }
 
   afterImgLoad(context, img) {
@@ -174,12 +174,12 @@ export default class ImageGame extends React.Component {
 
   loadImgErr() {
     const err = new Error(`load img url: ${this.props.imgUrl} error !`)
-    console.error(err.stack)
+    throw err
   }
 
   handleKeyUp(e, context, img) {
     // 阻止我按键盘的时候 网页移动
-    e.preventDefault();
+    e.preventDefault()
 
     if (e.key === 'ArrowRight') {
       this.pressRight(context, img)
@@ -202,15 +202,15 @@ export default class ImageGame extends React.Component {
     const { i, j } = this.nullKey
     if (i !== 0) {
       // 互换
-      let temp = this.pointsArr[i][j];
-      this.pointsArr[i][j] = this.pointsArr[i - 1][j];
-      this.pointsArr[i - 1][j] = temp;
+      let temp = this.pointsArr[i][j]
+      this.pointsArr[i][j] = this.pointsArr[i - 1][j]
+      this.pointsArr[i - 1][j] = temp
       // 空的i - 1
-      this.nullKey.i = i - 1;
+      this.nullKey.i = i - 1
 
       // 加一步
       this.setState({
-        step: this.state.step + 1
+        step: this.state.step + 1,
       })
     }
     this.drawImgSlice(context, img)
@@ -221,15 +221,15 @@ export default class ImageGame extends React.Component {
     const { i, j } = this.nullKey
     if (j !== 0) {
       // 互换
-      let temp = this.pointsArr[i][j];
-      this.pointsArr[i][j] = this.pointsArr[i][j - 1];
-      this.pointsArr[i][j - 1] = temp;
+      let temp = this.pointsArr[i][j]
+      this.pointsArr[i][j] = this.pointsArr[i][j - 1]
+      this.pointsArr[i][j - 1] = temp
       // 空的j - 1
-      this.nullKey.j = j - 1;
+      this.nullKey.j = j - 1
 
       // 加一步
       this.setState({
-        step: this.state.step + 1
+        step: this.state.step + 1,
       })
     }
     this.drawImgSlice(context, img)
@@ -241,15 +241,15 @@ export default class ImageGame extends React.Component {
     const { i, j } = this.nullKey
     if (i !== part - 1) {
       // 互换
-      let temp = this.pointsArr[i][j];
-      this.pointsArr[i][j] = this.pointsArr[i + 1][j];
-      this.pointsArr[i + 1][j] = temp;
+      let temp = this.pointsArr[i][j]
+      this.pointsArr[i][j] = this.pointsArr[i + 1][j]
+      this.pointsArr[i + 1][j] = temp
       // 空的i + 1
-      this.nullKey.i = i + 1;
+      this.nullKey.i = i + 1
 
       // 加一步
       this.setState({
-        step: this.state.step + 1
+        step: this.state.step + 1,
       })
     }
     this.drawImgSlice(context, img)
@@ -261,15 +261,15 @@ export default class ImageGame extends React.Component {
     const { i, j } = this.nullKey
     if (j !== part - 1) {
       // 互换
-      let temp = this.pointsArr[i][j];
-      this.pointsArr[i][j] = this.pointsArr[i][j + 1];
-      this.pointsArr[i][j + 1] = temp;
+      let temp = this.pointsArr[i][j]
+      this.pointsArr[i][j] = this.pointsArr[i][j + 1]
+      this.pointsArr[i][j + 1] = temp
       // 空的j + 1
-      this.nullKey.j = j + 1;
+      this.nullKey.j = j + 1
 
       // 加一步
       this.setState({
-        step: this.state.step + 1
+        step: this.state.step + 1,
       })
     }
     this.drawImgSlice(context, img)

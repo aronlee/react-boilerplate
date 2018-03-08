@@ -34,6 +34,7 @@ export default class MainPage extends Component {
             <Link className="main-left-link" to="/img-game">image game</Link>
             <Link className="main-left-link" to="/animations">animations</Link>
             <Link className="main-left-link" to="/test-png">test png</Link>
+            <Link className="main-left-link" to="/markdown">markdown</Link>
             {/* <Link className="main-left-link" to="/abattoir-game">abattoir-game</Link> */}
           </div>
           <div className="main-right">
@@ -43,6 +44,7 @@ export default class MainPage extends Component {
             <Route path="/img-game" component={getComponent(() => import(/* webpackChunkName: "img-game" */'./views/img-game'))} />
             <Route path="/animations" component={getComponent(() => import(/* webpackChunkName: "animations" */'./views/animations'))} />
             <Route path="/test-png" component={getComponent(() => import(/* webpackChunkName: "test-png" */'./views/test-png'))} />
+            <Route path="/markdown" component={getComponent(() => import(/* webpackChunkName: "markdown" */'./views/markdown'))} />
           </div>
         </div>
       </HashRouter>

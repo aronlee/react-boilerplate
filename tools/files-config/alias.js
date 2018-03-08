@@ -1,10 +1,10 @@
-import { resolve } from "path";
+// import { resolve } from "path";
 
-const srcPath = resolve(process.cwd(), './src');
+// const srcPath = resolve(process.cwd(), './src');
 
 
 const alias = {
-  
+
 }
 
 export default alias

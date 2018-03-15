@@ -1,3 +1,4 @@
-require('babel-register');
+require('babel-register')
 
-require('./sort')
+// require('./sort')
+require('./leetcode')

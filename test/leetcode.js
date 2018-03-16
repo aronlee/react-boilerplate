@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { twoSum } from '../src/leetcode'
+import { twoSum, lengthOfLongestSubstring } from '../src/leetcode'
 
 describe('leetcode所有的解答都要是通过的!', function () {
 
@@ -33,6 +33,18 @@ describe('leetcode所有的解答都要是通过的!', function () {
       allTestCase.forEach(item => {
         assert.deepEqual(twoSum(item.nums, item.target), item.result);
       })
+
+    });
+  });
+
+  // lengthOfLongestSubstring
+  describe('3、无重复字符的最长子串lengthOfLongestSubstring()', function () {
+    it('测试通过!', function () {
+
+      assert.deepEqual(lengthOfLongestSubstring('abcabcbb'), 3);
+      assert.deepEqual(lengthOfLongestSubstring('bbbbb'), 1);
+      assert.deepEqual(lengthOfLongestSubstring('pwwkew'), 3);
+      assert.deepEqual(lengthOfLongestSubstring('adsfebqweoadfuebdafersabcdefghijklmnopqrstuvwxyz.?[]{dadcejf'), 31);
 
     });
   });

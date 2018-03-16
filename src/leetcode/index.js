@@ -43,17 +43,24 @@ export function lengthOfLongestSubstring(s) {
 
   for (let start = 0; start < len; start++) {
 
-    let startIdx = start
-    let restStr = s.substring(start + 1)
-    let endIdx = len - 1
-    while (startIdx < endIdx) {
-      const curChar = s.charAt(startIdx)
-      const indexOf = restStr.indexOf()
-      if () {
+    let last = len - 1
 
+    for (let i = start; i < last; i++) {
+      const cur = s.charAt(i)
+      const rest = s.substring(i + 1, last + 1)
+      const indexOf = rest.indexOf(cur)
+      if (indexOf > -1) {
+        last = i + indexOf
       }
-      startIdx++
+      // console.log(`s: ${s}, start: ${start}, i: ${i}, cur: ${cur}, last: ${last}, rest: ${rest}`)
     }
+
+    const long = last - start + 1
+    maxLength = Math.max(maxLength, long)
+    // console.log(`maxLength: ${maxLength}`)
   }
+
+
+  return maxLength
 
 }

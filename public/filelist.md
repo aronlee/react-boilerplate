@@ -15,7 +15,7 @@ In this build:
 - 3.04d0d3c.js
 - 4.4d46aac.js
 - 5.bcc3d44.js
-- 6.bdbee56.js
+- 6.1544464.js
 - 7.aaf0525.js
 - common.js
 - vendor.js

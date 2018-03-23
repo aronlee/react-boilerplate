@@ -22,7 +22,7 @@ module.exports = baseConfig({
       // Default: false - remove files
       dry: false,
 
-      // If true, remove files on recompile. 
+      // If true, remove files on recompile.
       // Default: false
       watch: true,
 

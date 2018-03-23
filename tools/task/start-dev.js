@@ -85,18 +85,18 @@ async function start() {
   const bs = browserSync.create()
 
   const handle = (err, stats) => {
-    
+
     const statsJson = stats.toJson({ errorDetails: false })
 
     const statsArr = extractBundles(statsJson)
 
     statsArr.forEach(st => {
-      console.log(chalk.yellow('name:'), st.name)
-      console.log(chalk.yellow('time:'), st.time)
-      console.log(chalk.yellow('hash:'), st.hash)
+      // console.log(chalk.yellow('name:'), st.name)
+      // console.log(chalk.yellow('time:'), st.time)
+      // console.log(chalk.yellow('hash:'), st.hash)
       console.log(chalk.yellow('warnings:'), st.warnings)
       console.log(chalk.yellow('errors:'), st.errors)
-      console.log(chalk.yellow('modules:'), buildModuleMap(st.modules))
+      // console.log(chalk.yellow('modules:'), buildModuleMap(st.modules))
 
     })
   }

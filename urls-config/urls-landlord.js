@@ -91,6 +91,7 @@ var mapLanlord = {
   /**
    * @name 房东年付订单详情
    * @desc 其中 landlordId 订单Id
+   *
    */
   fdnfDetail: '/disH5/h5/annual/landlord/detail/:landlordId',
   /**
@@ -98,6 +99,34 @@ var mapLanlord = {
    * @desc
    */
   weixinDownloadApp: '/disH5/h5/web/download/app/ylfd',
+  /**
+   * @name 门锁报修页
+   * @desc lockId：门锁ID， 注意这里参数是query形式
+   * @host
+   */
+  lockFix: '/disH5/h5/help/lock/fix?lockId=1',
+  /**
+   * @name 门锁报修页
+   * @desc lockId：门锁ID， 注意这里参数是query形式
+   */
+  lockFixV1_3: '/disH5/h5/web/help/lock/fix?lockId=1',
+  /**
+   * @name 门锁报修如何检查页
+   * @desc
+   */
+  lockFix2: '/disH5/h5/web/help/lock/fix/2',
+  /**
+   * @name 房源分享
+   * @desc id：房源id
+   * @host renter
+   */
+  houseDetailShare: '/disH5/h5/house/detail/:id',
+  /**
+   * @name 房源分享
+   * @desc id：房源id
+   * @host renter
+   */
+  houseDetailShareV1_3: '/disH5/h5/web/house/detail/:id',
 }
 
 export default mapLanlord

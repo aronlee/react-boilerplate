@@ -1,32 +1,24 @@
 import fs from 'fs-extra'
-import xlsx from 'node-xlsx'
 import XLSX from 'xlsx'
 import parseComments from 'parse-comments'
-import { parse } from 'url'
-// import _ from 'lodash-es'
+import hostConf from '../../urls-config/host-conf.js'
 
-
-
-const prefix = `${process.cwd()}/src`
-const fileName = 'url-map-landlord'
-const config = require(`${prefix}/${fileName}.js`)
-
+const prefix = `${process.cwd()}/urls-config`
 const headers = ['页面名称', '字段名', '路径', '参数形式', '参数说明']
 const keys = ['name', 'field', 'url', 'paramsTypes', 'desc']
-
-
 const opts = [
   {
-    file: `${prefix}/url-map-landlord.js`,
+    field: 'landlord',
+    file: `${prefix}/urls-landlord.js`,
     sheetName: '房东APP前端页面url参数说明',
   },
   {
-    file: `${prefix}/url-map-renter.js`,
+    field: 'renter',
+    file: `${prefix}/urls-renter.js`,
     sheetName: '租客APP前端页面url参数说明',
   }
 ]
-
-const h5File = `${prefix}/url-map-h5.js`
+const h5File = `${prefix}/urls-h5.js`
 
 
 function parseUrl(url) {
@@ -56,11 +48,10 @@ function parseSentence(code) {
     if (result) {
       obj.field = result[1]
       let pathAll = result[3] || result[5]
-      let parseAfter = parseUrl(pathAll)
+      let parseAfter = parseUrl(String.trim(pathAll))
       obj.paramsTypes = parseAfter.params.map(param => `${param}: params`).concat(parseAfter.queries.map(query => `${query}: query`)).join('; ')
       obj.url = pathAll
       obj.path = parseAfter.path
-      obj.pathNoSlash = parseAfter.path.replace(/^\//, '')
       obj.params = parseAfter.params
       obj.queries = parseAfter.queries
     }
@@ -73,19 +64,25 @@ function parseSentence(code) {
 function parseEachConfig(url) {
   const input = fs.readFileSync(url, 'utf8')
   const comments = parseComments(input)
- return comments.map(comment => {
+  return comments.map(comment => {
     const code = comment.comment.code
     const obj = parseSentence(code)
     return Object.assign({
       name: comment.name,
-      desc: typeof comment.desc === 'string' ? comment.desc : ''
+      desc: typeof comment.desc === 'string' ? comment.desc : '',
+      host: comment.host || '',
     }, obj)
   })
 }
 
-function createJsonFile(name, conf) {
-  const obj = conf.reduce((total, cur) => (total[cur.field] = cur.pathNoSlash, total), {})
-  return fs.writeJson(name, obj)
+function getPath(obj, env, platform) {
+  return `${hostConf[env][obj.host] || hostConf[env][platform] || ''}${obj.path}`
+}
+
+function createJsonFile(name, env, platform, conf) {
+  // return fs.writeJson(name, Object.keys(conf).reduce((t, c) => (t[c] = conf[c].reduce((total, cur) => (total[cur.field] = getPath(cur, env, c), total), {}), t), {}))
+  // return fs.writeJson(name, Object.keys(conf).reduce((t, c) => (t[c] = conf[c].reduce((total, cur) => (total[cur.field] = getPath(cur, env, c), total), {}), t), {}))
+  return fs.writeJson(name, conf.reduce((total, cur) => (total[cur.field] = getPath(cur, env, platform), total), {}))
 }
 
 function filterItem(item) {
@@ -104,7 +101,7 @@ function filterData(confs) {
   })
 }
 
-const createUrlMap = function() {
+const createUrlMap = function () {
   const h5conf = parseEachConfig(h5File)
   let workBook = {
     SheetNames: [],
@@ -112,14 +109,38 @@ const createUrlMap = function() {
   }
   opts.forEach(opt => {
     const conf = parseEachConfig(opt.file)
-    const allConf = conf.concat(h5conf)
+    const confPlatform = conf.concat(h5conf)
     const jsonData = filterData([conf, h5conf])
     const data = XLSX.utils.json_to_sheet(jsonData)
     workBook.SheetNames.push(opt.sheetName)
     workBook.Sheets[opt.sheetName] = data
-    createJsonFile(opt.file.replace(/\.[a-zA-Z]+$/, '.json'), allConf)
+    for (const env in hostConf) {
+      createJsonFile(`${prefix}/urls-${opt.field}-${env}.json`, env, opt.field, confPlatform)
+    }
   })
-  XLSX.writeFile(workBook, `${prefix}/${fileName}.xlsx`);
+  XLSX.writeFile(workBook, `${prefix}/urls.xlsx`);
 }
 
-createUrlMap()
+const createUrlJson = function (env, platform) {
+  const h5conf = parseEachConfig(h5File)
+  const allConf = {}
+  opts.forEach(opt => {
+    const conf = parseEachConfig(opt.file)
+    allConf[opt.field] = conf.concat(h5conf)
+  })
+  const opt = opts.filter(item => item.field === platform)[0]
+  if(opt) {
+    const conf = parseEachConfig(opt.file)
+    return createJsonFile(`${prefix}/urls.json`, env, platform, conf)
+  } else {
+    throw new Error(`Unknow platform: Can\'t find a configuration for ${platform}!`)
+  }
+  // return createJsonFile(`${prefix}/urls.json`, env, allConf)
+}
+
+if (require.main === module) {
+  createUrlMap()
+}
+
+export default createUrlJson
+
